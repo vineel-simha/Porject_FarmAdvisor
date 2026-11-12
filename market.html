@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmAdvisor - Live Market Prices</title>
+    <meta name="description" content="Live Mandi rates and market prices for crops across India.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="market-page">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar glass scrolled" style="background: rgba(248, 244, 227, 0.95); box-shadow: var(--shadow-md);">
+        <a href="index.html" class="logo" style="color: var(--primary-green);" >
+            <span class="emoji">🌱</span> FarmAdvisor
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="index.html" style="color: var(--text-brown);" data-lang="nav_home">Home</a></li>
+            <li><a href="crop-advice.html" style="color: var(--text-brown);" data-lang="nav_crop">Crop Advice</a></li>
+            <li><a href="weather.html" style="color: var(--text-brown);" data-lang="nav_weather">Weather</a></li>
+            <li><a href="market.html" style="color: var(--text-brown);" data-lang="nav_market">Market Prices</a></li>
+            <li><a href="schemes.html" style="color: var(--text-brown);" data-lang="nav_schemes">Govt Schemes</a></li>`n            <li><a href="kisan-pool.html" style="color: var(--text-brown);" data-lang="nav_kisan_pool">🚛 Kisan-Pool</a></li>
+            <li><a href="expert-chat.html" style="color: var(--text-brown);" data-lang="nav_chat">Expert Chat</a></li>
+            <li><a href="contact.html" style="color: var(--text-brown);" data-lang="nav_contact">Contact</a></li>
+        </ul>
+        
+                <div class="nav-actions">
+            <div class="lang-switcher" id="langSwitcher">
+                <button class="lang-btn" onclick="toggleLangMenu()">
+                    🌒 <span id="currentLangLabel">EN</span> v
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-option active" onclick="setLanguage('en')">English (EN)</div>
+                    <div class="lang-option" onclick="setLanguage('hi')">Hindi (HI)</div>
+                    <div class="lang-option" onclick="setLanguage('kn')">Kannada (KN)</div>
+                    <div class="lang-option" onclick="setLanguage('te')">Telugu (TE)</div>
+                    <div class="lang-option" onclick="setLanguage('ta')">Tamil (TA)</div>
+                    <div class="lang-option" onclick="setLanguage('mr')">Marathi (MR)</div>
+                    <div class="lang-option" onclick="setLanguage('pa')">Punjabi (PA)</div>
+                    <div class="lang-option" onclick="setLanguage('bn')">Bengali (BN)</div>
+                </div>
+            </div>
+            <a href="#" class="btn btn-outline nav-login" style="color: var(--primary-green); border-color: var(--primary-green);" data-lang="nav_login">Login</a>
+            <a href="#" class="btn btn-green" data-lang="nav_signup">Sign Up</a>
+        </div>
+        
+        <div class="hamburger">
+            <span style="background-color: var(--primary-green);"></span>
+            <span style="background-color: var(--primary-green);"></span>
+            <span style="background-color: var(--primary-green);"></span>
+        </div>
+    </nav>
+
+    <main>
+        <div class="page-header">
+            <h1 data-lang="market_title">Live Mandi Prices</h1>
+            <p>Real-time commodity data directly from Indian markets.</p>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <select class="filter-select" id="state-select">
+                <option value="All">All States</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+            </select>
+            <select class="filter-select" id="district-select">
+                <option value="All">All Districts</option>
+            </select>
+            <select class="filter-select" id="category-select">
+                <option value="All">All Categories</option>
+                <option value="Grains">Grains</option>
+                <option value="Vegetables">Vegetables</option>
+                <option value="Fruits">Fruits</option>
+                <option value="Pulses">Pulses</option>
+            </select>
+            <button class="btn btn-amber" id="refresh-btn" data-lang="market_refresh">
+                <span>🔄</span> Refresh Prices
+            </button>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="market-dashboard">
+            <!-- Price Trend Chart -->
+            <div class="chart-container">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <h3>Price Trend (30 Days)</h3>
+                    <div>
+                        <button id="reset-chart-btn" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.9rem; margin-right: 10px; background: white;">Reset Chart</button>
+                        <select class="filter-select" style="min-width: 120px;" id="chart-crop-select">
+                            <option value="Wheat">Wheat</option>
+                            <option value="Tomato">Tomato</option>
+                            <option value="Onion">Onion</option>
+                            <option value="Rice">Rice</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Canvas for Chart.js -->
+                <div style="height: 320px; position: relative;">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Top Movers Section -->
+            <div class="movers-container">
+                <div class="mover-card" style="border-left-color: #38b000;">
+                    <h4>📈 Biggest Gainer Today</h4>
+                    <p>Tomato (Bangalore)</p>
+                    <div class="price">â‚¹1,850/q <span class="trend-down" style="font-size: 1rem;">â†‘ +12%</span></div>
+                </div>
+                <div class="mover-card" style="border-left-color: #d00000;">
+                    <h4>📉 Biggest Fall</h4>
+                    <p>Onion (Lasalgaon)</p>
+                    <div class="price">â‚¹1,200/q <span class="trend-up" style="font-size: 1rem;">â†“ -8%</span></div>
+                </div>
+                <div class="mover-card" style="border-left-color: var(--accent-amber);">
+                    <h4>🔥 Most Traded</h4>
+                    <p>Wheat (Punjab Mandis)</p>
+                    <div class="price">Volume: 45k Tonnes</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Price Table -->
+        <h3 style="margin-bottom: 15px; font-family: var(--font-heading); font-size: 1.8rem;">Current Market Rates</h3>
+        <div class="table-container">
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th data-lang="market_crop">Crop Name</th>
+                        <th>Category</th>
+                        <th>State</th>
+                        <th data-lang="market_mandi">Market (Mandi)</th>
+                        <th data-lang="market_min">Min Price (â‚¹/q)</th>
+                        <th data-lang="market_max">Max Price (â‚¹/q)</th>
+                        <th data-lang="market_modal">Modal Price</th>
+                        <th data-lang="market_trend">Trend</th>
+                        <th>Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody id="price-table-body">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Price Alert Subscription Box -->
+        <div class="alert-subscribe">
+            <h2>Get Instant Price Alerts on WhatsApp</h2>
+            <p>Never miss a spike in crop prices. We'll notify you when prices change.</p>
+            <form id="alert-form" onsubmit="event.preventDefault(); alert('Subscribed to alerts successfully!');">
+                <input type="text" placeholder="Enter Crop Name (e.g. Onion)" required>
+                <input type="tel" placeholder="Mobile Number" required pattern="[0-9]{10}">
+                <button type="submit" class="btn btn-amber">Subscribe Alerts</button>
+            </form>
+            <div class="checkbox-wrap">
+                <input type="checkbox" id="change-thresh" checked>
+                <label for="change-thresh">Notify me when price changes by Â±10%</label>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- Kept exactly same as other pages -->
+        <div class="footer-container">
+            <div class="footer-col" style="grid-column: span 2;">
+                <div class="footer-logo">🌱 FarmAdvisor</div>
+                <p class="footer-tagline">Real-time weather, market prices, and expert advice â€” all in one place for Indian farmers.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul><li><a href="index.html" data-lang="nav_home">Home</a></li><li><a href="crop-advice.html" data-lang="nav_crop">Crop Advice</a></li></ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> FarmAdvisor. Built for Indian Farmers.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="translations.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/market.js"></script>
+    <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+</body>
+</html>
+
+
+
+
+

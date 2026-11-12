@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm & Equipment Rentals</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --green-dark: #1B4332;
+            --amber: #F4A261;
+            --cream: #F8F4E3;
+            --blue: #2A9D8F;
+        }
+        
+        body { background: var(--background-cream, var(--cream)); }
+        
+        /* SECTION 1: Hero Banner */
+        .rent-hero {
+            background: linear-gradient(135deg, var(--green-dark) 0%, var(--blue) 100%);
+            color: white;
+            padding: 140px 20px 80px;
+            text-align: center;
+        }
+        .rent-hero h1 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        .rent-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        .rent-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .rent-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+        .rent-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* SECTION 2: Load Board */
+        .rent-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .rent-section-title {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: var(--text-brown);
+        }
+        .rent-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .rent-filters select, .rent-filters input {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            flex: 1;
+            min-width: 150px;
+            font-family: var(--font-body);
+        }
+        .rent-filters button {
+            flex: 0 0 auto;
+            min-width: 120px;
+        }
+        .rent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        .rent-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid #eee;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .rent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        .rent-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .rent-card-header h3 {
+            font-size: 1.1rem;
+            color: var(--green-dark);
+            margin: 0;
+        }
+        .rent-detail {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            display: flex;
+            gap: 8px;
+            color: #444;
+        }
+        .rent-join-btn {
+            width: 100%;
+            margin-top: auto;
+            padding-top: 15px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        
+        .type-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--amber);
+            color: #333;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .type-land {
+            background: var(--primary-green);
+            color: white;
+        }
+        
+        /* SECTION 3: Post Form */
+        .rent-post-layout {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+        .rent-form-box, .rent-info-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+        }
+        .rent-info-panel {
+            background: var(--blue);
+            color: white;
+        }
+        .rent-form-group {
+            margin-bottom: 15px;
+        }
+        .rent-form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .rent-form-group input, .rent-form-group select, .rent-form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: var(--font-body);
+        }
+        .rent-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .rent-post-layout {
+                grid-template-columns: 1fr;
+            }
+            .rent-two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar glass">
+        <a href="index.html" class="logo">
+            <span class="emoji">🌱</span> FarmAdvisor
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="index.html" data-lang="nav_home">Home</a></li>
+            <li><a href="crop-advice.html" data-lang="nav_crop">Crop Advice</a></li>
+            <li><a href="weather.html" data-lang="nav_weather">Weather</a></li>
+            <li><a href="market.html" data-lang="nav_market">Market Prices</a></li>
+            <li><a href="schemes.html" data-lang="nav_schemes">Govt Schemes</a></li>
+            <li><a href="kisan-pool.html" data-lang="nav_kisan_pool">🚛 Kisan-Pool</a></li>
+            <li><a href="renting.html" data-lang="nav_renting">🚜 Rentals</a></li>
+            <li><a href="expert-chat.html" data-lang="nav_chat">Expert Chat</a></li>
+            <li><a href="contact.html" data-lang="nav_contact">Contact</a></li>
+        </ul>
+        
+        <div class="nav-actions">
+            <div class="lang-switcher" id="langSwitcher">
+                <button class="lang-btn" onclick="toggleLangMenu()">
+                    🌐 <span id="currentLangLabel">EN</span> ▼
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-option active" onclick="setLanguage('en')">English (EN)</div>
+                    <div class="lang-option" onclick="setLanguage('hi')">हिन्दी (HI)</div>
+                    <div class="lang-option" onclick="setLanguage('kn')">ಕನ್ನಡ (KN)</div>
+                    <div class="lang-option" onclick="setLanguage('te')">తెలుగు (TE)</div>
+                    <div class="lang-option" onclick="setLanguage('ta')">தமிழ் (TA)</div>
+                    <div class="lang-option" onclick="setLanguage('mr')">मराठी (MR)</div>
+                    <div class="lang-option" onclick="setLanguage('pa')">ਪੰਜਾਬੀ (PA)</div>
+                    <div class="lang-option" onclick="setLanguage('bn')">বাংলা (BN)</div>
+                </div>
+            </div>
+            <a href="login.html" class="btn btn-outline nav-login" data-lang="nav_login">Login</a>
+            <a href="signup.html" class="btn btn-green" data-lang="nav_signup">Sign Up</a>
+        </div>
+        
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Section 1 — Hero Banner -->
+        <section class="rent-hero">
+            <h1>Farm & Equipment Rentals 🚜</h1>
+            <p>Rent idle equipment or lease your land to other farmers. Share profits, reduce costs.</p>
+            <div class="rent-stats">
+                <div class="rent-badge">✨ Share Your Land & Keep Profit</div>
+                <div class="rent-badge">🚜 Rent Tractors & Equipment Safely</div>
+            </div>
+            <div class="rent-actions">
+                <a href="#post-rental" class="btn btn-amber">Post Equipment/Land +</a>
+                <a href="#rental-board" class="btn btn-outline-white">Browse Rentals &rarr;</a>
+            </div>
+        </section>
+
+        <!-- Section 2 — Live Rental Board -->
+        <section id="rental-board" class="rent-section">
+            <h2 class="rent-section-title">🗺️ Available Equipment & Land</h2>
+            
+            <div class="rent-filters">
+                <select id="filter-type">
+                    <option value="">All Types</option>
+                    <option value="Equipment">Equipment / Machine</option>
+                    <option value="Land">Agricultural Land</option>
+                </select>
+                <input type="text" id="filter-location" placeholder="Search Village or District...">
+                <button class="btn btn-amber" onclick="filterRentals()">Search</button>
+            </div>
+            
+            <div class="rent-grid" id="rentals-grid">
+                <!-- Cards generated via JS -->
+            </div>
+        </section>
+
+        <!-- Section 3 — Post Your Rental Form -->
+        <section id="post-rental" class="rent-section">
+            <h2 class="rent-section-title">🚜 List Your Resource</h2>
+            <div class="rent-post-layout">
+                <!-- Left: Form -->
+                <div class="rent-form-box">
+                    <form id="postRentalForm" onsubmit="handlePostRental(event)">
+                        <div class="rent-two-col">
+                            <div class="rent-form-group">
+                                <label>Your Name *</label>
+                                <input type="text" id="r_name" required>
+                            </div>
+                            <div class="rent-form-group">
+                                <label>Mobile Number *</label>
+                                <input type="tel" id="r_mobile" pattern="[0-9]{10}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="rent-form-group">
+                            <label>Resource Type *</label>
+                            <select id="r_type" required onchange="toggleResourceFields()">
+                                <option value="Equipment">Equipment / Tractor</option>
+                                <option value="Land">Agricultural Land (Lease/Profit Share)</option>
+                            </select>
+                        </div>
+
+                        <div class="rent-two-col">
+                            <div class="rent-form-group">
+                                <label>Location (Village/Town) *</label>
+                                <input type="text" id="r_location" required>
+                            </div>
+                            <div class="rent-form-group">
+                                <label>District *</label>
+                                <input type="text" id="r_district" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Dynamic Fields -->
+                        <div id="equipment-fields">
+                            <div class="rent-two-col">
+                                <div class="rent-form-group">
+                                    <label>Equipment Name *</label>
+                                    <input type="text" id="r_eq_name" placeholder="e.g. Mahindra Tractor 50HP">
+                                </div>
+                                <div class="rent-form-group">
+                                    <label>Rent per Hour/Day (₹) *</label>
+                                    <input type="number" id="r_cost">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="land-fields" style="display:none;">
+                            <div class="rent-two-col">
+                                <div class="rent-form-group">
+                                    <label>Land Size (Acres) *</label>
+                                    <input type="number" id="r_land_size" step="0.1">
+                                </div>
+                                <div class="rent-form-group">
+                                    <label>Model *</label>
+                                    <select id="r_land_model">
+                                        <option value="Fixed Rent">Fixed Rent per Year</option>
+                                        <option value="Profit Share">Profit Sharing</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="rent-form-group">
+                                <label>Expected Amount/Share Details</label>
+                                <input type="text" id="r_land_price" placeholder="e.g. ₹50,000/year or 50% Profit Share">
+                            </div>
+                        </div>
+                        
+                        <div class="rent-form-group">
+                            <label>Description & Terms</label>
+                            <textarea id="r_notes" rows="3" placeholder="Condition of equipment, water availability for land, etc."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-amber" style="width:100%; padding: 15px; font-size: 1.1rem;">Post Resource</button>
+                    </form>
+                </div>
+                
+                <!-- Right: Info Panel -->
+                <div class="rent-info-panel">
+                    <h2 style="font-family: var(--font-heading); margin-bottom: 20px;">Why Rent? 🤝</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 15px;"><span>💰</span> <strong>Earn Passive Income:</strong> Make money from your tractor or land when you're not using it.</li>
+                        <li style="margin-bottom: 15px;"><span>🚜</span> <strong>No Upfront Cost:</strong> Landless farmers can rent land to farm and share profits.</li>
+                        <li style="margin-bottom: 15px;"><span>🌍</span> <strong>Community Growth:</strong> Help fellow farmers increase their yield with shared resources.</li>
+                        <li style="margin-bottom: 15px;"><span>🤝</span> <strong>Flexible Terms:</strong> You set the price, terms, and profit-sharing ratio.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> FarmAdvisor. Built for Indian Farmers.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="translations.js"></script>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        const initialRentals = [
+            { id: 'r1', type: 'Equipment', name: 'John Deere Tractor 50HP', owner: 'Ramesh K.', location: 'Mandya', district: 'Karnataka', cost: '₹800/Hour', desc: 'Comes with driver and cultivator.', contact: '9876543210' },
+            { id: 'r2', type: 'Land', name: '5 Acres Fertile Land', owner: 'Suresh Patil', location: 'Hubli', district: 'Karnataka', cost: '50% Profit Share', desc: 'Good water source, looking for active farmer to cultivate.', contact: '9876543211' },
+            { id: 'r3', type: 'Equipment', name: 'Harvester Machine', owner: 'Amit Singh', location: 'Ludhiana', district: 'Punjab', cost: '₹2000/Day', desc: 'Available for wheat harvesting season.', contact: '9876543212' },
+            { id: 'r4', type: 'Land', name: '2.5 Acres Land for Lease', owner: 'Venkat Reddy', location: 'Kurnool', district: 'Andhra Pradesh', cost: '₹40,000/Year', desc: 'Fixed rent. Suitable for cotton or chilli.', contact: '9876543213' }
+        ];
+
+        function getRentals() {
+            const saved = localStorage.getItem('farmadvisor_rentals');
+            if (saved) return JSON.parse(saved);
+            localStorage.setItem('farmadvisor_rentals', JSON.stringify(initialRentals));
+            return initialRentals;
+        }
+
+        function renderRentals(filterType = '', filterLoc = '') {
+            const grid = document.getElementById('rentals-grid');
+            grid.innerHTML = '';
+            let rentals = getRentals();
+
+            if (filterType) rentals = rentals.filter(r => r.type === filterType);
+            if (filterLoc) rentals = rentals.filter(r => r.location.toLowerCase().includes(filterLoc.toLowerCase()) || r.district.toLowerCase().includes(filterLoc.toLowerCase()));
+
+            if (rentals.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 40px;">No resources found.</div>';
+                return;
+            }
+
+            rentals.forEach(r => {
+                const isLand = r.type === 'Land';
+                grid.innerHTML += `
+                    <div class="rent-card">
+                        <span class="type-badge ${isLand ? 'type-land' : ''}">${r.type}</span>
+                        <div class="rent-card-header">
+                            <h3>${r.name}</h3>
+                        </div>
+                        <div class="rent-detail">📍 ${r.location}, ${r.district}</div>
+                        <div class="rent-detail">💰 <strong>${r.cost}</strong></div>
+                        <div class="rent-detail">👨‍🌾 ${r.owner}</div>
+                        <p style="font-size: 0.9rem; color: #666; margin: 10px 0;">${r.desc}</p>
+                        <button class="btn btn-green rent-join-btn" onclick="alert('Owner Contact: ${r.contact}')">Contact Owner</button>
+                    </div>
+                `;
+            });
+        }
+
+        function filterRentals() {
+            renderRentals(document.getElementById('filter-type').value, document.getElementById('filter-location').value);
+        }
+
+        function toggleResourceFields() {
+            const type = document.getElementById('r_type').value;
+            if (type === 'Land') {
+                document.getElementById('equipment-fields').style.display = 'none';
+                document.getElementById('land-fields').style.display = 'block';
+            } else {
+                document.getElementById('equipment-fields').style.display = 'block';
+                document.getElementById('land-fields').style.display = 'none';
+            }
+        }
+
+        function handlePostRental(e) {
+            e.preventDefault();
+            const type = document.getElementById('r_type').value;
+            const newRental = {
+                id: 'r' + Date.now(),
+                type: type,
+                owner: document.getElementById('r_name').value,
+                contact: document.getElementById('r_mobile').value,
+                location: document.getElementById('r_location').value,
+                district: document.getElementById('r_district').value,
+                desc: document.getElementById('r_notes').value
+            };
+
+            if (type === 'Equipment') {
+                newRental.name = document.getElementById('r_eq_name').value;
+                newRental.cost = '₹' + document.getElementById('r_cost').value + '/Day';
+            } else {
+                newRental.name = document.getElementById('r_land_size').value + ' Acres Land';
+                newRental.cost = document.getElementById('r_land_price').value;
+            }
+
+            const rentals = getRentals();
+            rentals.unshift(newRental);
+            localStorage.setItem('farmadvisor_rentals', JSON.stringify(rentals));
+            
+            alert('Resource posted successfully!');
+            e.target.reset();
+            renderRentals();
+            window.scrollTo({ top: document.getElementById('rental-board').offsetTop - 50, behavior: 'smooth' });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderRentals();
+        });
+    </script>
+</body>
+</html>

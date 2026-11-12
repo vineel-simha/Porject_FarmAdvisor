@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisan-Pool - Share Your Truck</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --green-dark: #1B4332;
+            --amber: #F4A261;
+            --cream: #F8F4E3;
+        }
+        
+        body { background: var(--background-cream, var(--cream)); }
+        
+        /* SECTION 1: Hero Banner */
+        .kp-hero {
+            background: linear-gradient(135deg, var(--green-dark) 0%, var(--primary-green) 100%);
+            color: white;
+            padding: 140px 20px 80px;
+            text-align: center;
+        }
+        .kp-hero h1 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        .kp-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        .kp-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .kp-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+        .kp-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .btn-amber {
+            background: var(--amber);
+            color: var(--text-brown);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        .btn-amber:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(244, 162, 97, 0.4);
+        }
+        .btn-outline-white {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        .btn-outline-white:hover {
+            background: white;
+            color: var(--green-dark);
+        }
+
+        /* SECTION 2: Load Board */
+        .kp-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .kp-section-title {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: var(--text-brown);
+        }
+        .kp-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .kp-filters select, .kp-filters input {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            flex: 1;
+            min-width: 150px;
+            font-family: var(--font-body);
+        }
+        .kp-filters button {
+            flex: 0 0 auto;
+            min-width: 120px;
+        }
+        .kp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        .kp-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid #eee;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .kp-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        .kp-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .kp-card-header h3 {
+            font-size: 1.1rem;
+            color: var(--green-dark);
+            margin: 0;
+        }
+        .kp-detail {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            display: flex;
+            gap: 8px;
+            color: #444;
+        }
+        .kp-join-btn {
+            width: 100%;
+            margin-top: auto;
+            padding-top: 15px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .kp-seats {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 8px;
+        }
+        .kp-card.full .kp-join-btn {
+            background: #eee;
+            color: #666;
+            cursor: not-allowed;
+            pointer-events: none;
+            box-shadow: none;
+        }
+        
+        /* SECTION 3: Post Form */
+        .kp-post-layout {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+        .kp-form-box, .kp-info-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+        }
+        .kp-info-panel {
+            background: var(--green-dark);
+            color: white;
+        }
+        .kp-form-group {
+            margin-bottom: 15px;
+        }
+        .kp-form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .kp-form-group input, .kp-form-group select, .kp-form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: var(--font-body);
+        }
+        .kp-form-group input:focus, .kp-form-group select:focus, .kp-form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+        .kp-form-group.error input {
+            border-color: #d00000;
+        }
+        .kp-form-group .error-msg {
+            color: #d00000;
+            font-size: 0.8rem;
+            margin-top: 4px;
+            display: none;
+        }
+        .kp-form-group.error .error-msg {
+            display: block;
+        }
+        .kp-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .kp-calc {
+            margin-top: 30px;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .kp-calc input[type="range"] {
+            width: 100%;
+            margin: 15px 0;
+            accent-color: var(--amber);
+        }
+        .kp-benefits {
+            list-style: none;
+            margin-top: 20px;
+        }
+        .kp-benefits li {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        /* SECTION 4: My Rides */
+        .kp-empty {
+            text-align: center;
+            padding: 50px 20px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .kp-empty img {
+            width: 150px;
+            opacity: 0.5;
+            margin-bottom: 20px;
+        }
+        
+        /* SECTION 5: How it works */
+        .kp-how {
+            background: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .kp-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            max-width: 1100px;
+            margin: 40px auto 0;
+        }
+        .kp-step {
+            flex: 1;
+            background: var(--background-cream);
+            padding: 30px;
+            border-radius: 16px;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+        .kp-step h4 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            margin: 15px 0 10px;
+            color: var(--green-dark);
+        }
+        .kp-step p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+        .kp-step-num {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--amber);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .kp-step-icon {
+            font-size: 3rem;
+        }
+        .kp-arrow {
+            font-size: 2rem;
+            color: var(--amber);
+        }
+
+        /* SECTION 6: Savings Counter */
+        .kp-counter-bar {
+            background: var(--green-dark);
+            color: white;
+            padding: 60px 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            text-align: center;
+            gap: 50px;
+        }
+        .kp-counter-item h2 {
+            font-size: 3.5rem;
+            color: var(--amber);
+            margin-bottom: 10px;
+            font-family: var(--font-heading);
+        }
+
+        /* Toast Modal */
+        .kp-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2D6A4F;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1000;
+        }
+        .kp-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            z-index: 2000;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 400px;
+            text-align: center;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .kp-post-layout {
+                grid-template-columns: 1fr;
+            }
+            .kp-steps {
+                flex-direction: column;
+            }
+            .kp-arrow {
+                transform: rotate(90deg);
+            }
+            .kp-two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar glass">
+        <a href="index.html" class="logo">
+            <span class="emoji">🌱</span> FarmAdvisor
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="index.html" data-lang="nav_home">Home</a></li>
+            <li><a href="crop-advice.html" data-lang="nav_crop">Crop Advice</a></li>
+            <li><a href="weather.html" data-lang="nav_weather">Weather</a></li>
+            <li><a href="market.html" data-lang="nav_market">Market Prices</a></li>
+            <li><a href="schemes.html" data-lang="nav_schemes">Govt Schemes</a></li>
+            <li><a href="kisan-pool.html" data-lang="nav_kisan_pool">🚛 Kisan-Pool</a></li>
+            <li><a href="renting.html" data-lang="nav_renting">🚜 Rentals</a></li>
+            <li><a href="expert-chat.html" data-lang="nav_chat">Expert Chat</a></li>
+            <li><a href="contact.html" data-lang="nav_contact">Contact</a></li>
+        </ul>
+        
+                <div class="nav-actions">
+            <div class="lang-switcher" id="langSwitcher">
+                <button class="lang-btn" onclick="toggleLangMenu()">
+                    🌒 <span id="currentLangLabel">EN</span> v
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-option active" onclick="setLanguage('en')">English (EN)</div>
+                    <div class="lang-option" onclick="setLanguage('hi')">Hindi (HI)</div>
+                    <div class="lang-option" onclick="setLanguage('kn')">Kannada (KN)</div>
+                    <div class="lang-option" onclick="setLanguage('te')">Telugu (TE)</div>
+                    <div class="lang-option" onclick="setLanguage('ta')">Tamil (TA)</div>
+                    <div class="lang-option" onclick="setLanguage('mr')">Marathi (MR)</div>
+                    <div class="lang-option" onclick="setLanguage('pa')">Punjabi (PA)</div>
+                    <div class="lang-option" onclick="setLanguage('bn')">Bengali (BN)</div>
+                </div>
+            </div>
+            <a href="login.html" class="btn btn-outline nav-login" data-lang="nav_login">Login</a>
+            <a href="signup.html" class="btn btn-green" data-lang="nav_signup">Sign Up</a>
+        </div>
+        
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Section 1 — Hero Banner -->
+        <section class="kp-hero">
+            <h1>Kisan-Pool 🚛</h1>
+            <p>Share your truck. Split the cost. Reach bigger markets together.</p>
+            <div class="kp-stats">
+                <div class="kp-badge">✨ ₹3,000+ saved per trip on average</div>
+                <div class="kp-badge">🗺️ Join rides across 500+ mandis</div>
+            </div>
+            <div class="kp-actions">
+                <a href="#post-ride" class="btn-amber">Post My Truck Space +</a>
+                <a href="#load-board" class="btn-outline-white">Find a Ride &rarr;</a>
+            </div>
+        </section>
+
+        <!-- Section 2 — Live Community Load Board -->
+        <section id="load-board" class="kp-section">
+            <h2 class="kp-section-title">🗺️ Available Rides Near You</h2>
+            
+            <div class="kp-filters">
+                <select id="filter-state">
+                    <option value="">All States</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                </select>
+                <input type="text" id="filter-mandi" placeholder="Destination Mandi...">
+                <select id="filter-date">
+                    <option value="Any">Any Date</option>
+                    <option value="Today">Today</option>
+                    <option value="This Week">This Week</option>
+                </select>
+                <button class="btn-amber" onclick="filterRides()">Search</button>
+            </div>
+            
+            <div class="kp-grid" id="rides-grid">
+                <!-- Cards generated via JS -->
+            </div>
+        </section>
+
+        <!-- Section 3 — Post Your Own Ride Form -->
+        <section id="post-ride" class="kp-section">
+            <h2 class="kp-section-title">🚛 Post Your Truck Space</h2>
+            <div class="kp-post-layout">
+                <!-- Left: Form -->
+                <div class="kp-form-box">
+                    <form id="postRideForm" onsubmit="handlePostRide(event)">
+                        <div class="kp-two-col">
+                            <div class="kp-form-group">
+                                <label>Your Name *</label>
+                                <input type="text" id="f_name" required>
+                                <span class="error-msg">Required</span>
+                            </div>
+                            <div class="kp-form-group">
+                                <label>Mobile Number *</label>
+                                <input type="tel" id="f_mobile" pattern="[0-9]{10}" placeholder="10 digits" required>
+                                <span class="error-msg">Valid 10-digit number required</span>
+                            </div>
+                        </div>
+                        
+                        <div class="kp-two-col">
+                            <div class="kp-form-group">
+                                <label>Departure Village/Town *</label>
+                                <input type="text" id="f_from_vill" required>
+                            </div>
+                            <div class="kp-form-group">
+                                <label>Departure District *</label>
+                                <input type="text" id="f_from_dist" required>
+                            </div>
+                        </div>
+                        
+                        <div class="kp-two-col">
+                            <div class="kp-form-group">
+                                <label>State *</label>
+                                <select id="f_state" required>
+                                    <option value="">Select State</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                </select>
+                            </div>
+                            <div class="kp-form-group">
+                                <label>Destination Mandi *</label>
+                                <input type="text" id="f_to" required>
+                            </div>
+                        </div>
+                        
+                        <div class="kp-two-col">
+                            <div class="kp-form-group">
+                                <label>Travel Date *</label>
+                                <input type="date" id="f_date" required>
+                            </div>
+                            <div class="kp-form-group">
+                                <label>Travel Time</label>
+                                <input type="time" id="f_time">
+                            </div>
+                        </div>
+                        
+                        <div class="kp-two-col">
+                            <div class="kp-form-group">
+                                <label>Available Space (KG) *</label>
+                                <input type="number" id="f_space" required>
+                            </div>
+                            <div class="kp-form-group">
+                                <label>Cost per 100kg (₹) *</label>
+                                <input type="number" id="f_cost" required>
+                            </div>
+                        </div>
+                        
+                        <div class="kp-form-group">
+                            <label>Crops You Are Carrying</label>
+                            <input type="text" id="f_crops" placeholder="Tomato, Onion, Wheat">
+                        </div>
+                        
+                        <div class="kp-two-col">
+                            <div class="kp-form-group">
+                                <label>Max Farmers to Accommodate *</label>
+                                <select id="f_max_farmers" required>
+                                    <option value="1">1 Farmer</option>
+                                    <option value="2">2 Farmers</option>
+                                    <option value="3">3 Farmers</option>
+                                    <option value="4">4 Farmers</option>
+                                    <option value="5">5 Farmers</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="kp-form-group">
+                            <label>Additional Notes</label>
+                            <textarea id="f_notes" rows="3"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-amber" style="width:100%; padding: 15px; font-size: 1.1rem;">Post My Ride 🚛</button>
+                    </form>
+                </div>
+                
+                <!-- Right: Green Panel -->
+                <div class="kp-info-panel">
+                    <h2 style="font-family: var(--font-heading); margin-bottom: 20px;">Why Kisan-Pool? 🤝</h2>
+                    <ul class="kp-benefits">
+                        <li><span>💰</span> Save ₹2,000-5,000 per market trip</li>
+                        <li><span>🤝</span> Build community with nearby farmers</li>
+                        <li><span>🌍</span> Reduce carbon footprint of agriculture</li>
+                        <li><span>📈</span> Reach bigger markets you couldn't afford alone</li>
+                    </ul>
+                    
+                    <div class="kp-calc">
+                        <h4 style="margin-bottom: 10px;">Enter your trip distance &rarr;</h4>
+                        <input type="range" id="distSlider" min="10" max="500" value="100" oninput="updateSavings()">
+                        <div style="display:flex; justify-content:space-between; font-size:0.9rem; margin-bottom:15px;">
+                            <span>10 KM</span>
+                            <span id="distVal">100 KM</span>
+                            <span>500 KM</span>
+                        </div>
+                        
+                        <h4 style="margin-bottom: 10px;">Enter your crop weight (KG) &rarr;</h4>
+                        <input type="range" id="kgSlider" min="100" max="5000" step="100" value="1000" oninput="updateSavings()">
+                        <div style="display:flex; justify-content:space-between; font-size:0.9rem;">
+                            <span>100 KG</span>
+                            <span id="kgVal">1000 KG</span>
+                            <span>5000 KG</span>
+                        </div>
+
+                        <h3 style="margin-top: 15px; color: var(--amber); font-size: 1.5rem;">Estimated savings: <span id="savingVal">₹800</span></h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4 — My Rides -->
+        <section class="kp-section">
+            <h2 class="kp-section-title">🚛 My Posted Rides</h2>
+            <div class="kp-grid" id="my-rides-grid">
+                <!-- Generated via JS -->
+            </div>
+        </section>
+
+        <!-- Section 5 — How it Works -->
+        <section class="kp-how">
+            <h2 class="kp-section-title" style="margin-bottom:10px;">How It Works</h2>
+            <p style="color:#666; max-width:600px; margin:0 auto;">Simple 3-step process to share costs and maximize profits.</p>
+            
+            <div class="kp-steps">
+                <div class="kp-step">
+                    <div class="kp-step-num">1</div>
+                    <div class="kp-step-icon">🚛</div>
+                    <h4>Post Space</h4>
+                    <p>Truck owner posts available space and destination</p>
+                </div>
+                <div class="kp-arrow">&rarr;</div>
+                <div class="kp-step">
+                    <div class="kp-step-num">2</div>
+                    <div class="kp-step-icon">🌾</div>
+                    <h4>Find Ride</h4>
+                    <p>Nearby farmers browse and join the ride</p>
+                </div>
+                <div class="kp-arrow">&rarr;</div>
+                <div class="kp-step">
+                    <div class="kp-step-num">3</div>
+                    <div class="kp-step-icon">💰</div>
+                    <h4>Save Money</h4>
+                    <p>Everyone splits the cost and saves money</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6 — Savings Counter -->
+        <section class="kp-counter-bar">
+            <div class="kp-counter-item">
+                <h2 class="kp-counter" data-target="47">0</h2>
+                <p>🚛 Rides Posted This Week</p>
+            </div>
+            <div class="kp-counter-item">
+                <h2 class="kp-counter" data-target="184000" data-prefix="₹">0</h2>
+                <p>💰 Saved by Farmers This Month</p>
+            </div>
+            <div class="kp-counter-item">
+                <h2 class="kp-counter" data-target="312">0</h2>
+                <p>👨‍🌾 Farmers Connected</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col" style="grid-column: span 2;">
+                <div class="footer-logo">
+                    🌱 FarmAdvisor
+                </div>
+                <p class="footer-tagline">Real-time weather, market prices, and expert advice — all in one place for Indian farmers.</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" title="WhatsApp">📱</a>
+                    <a href="#" class="social-icon" title="YouTube">▶️</a>
+                    <a href="#" class="social-icon" title="Twitter/X">🐦</a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html" data-lang="nav_home">Home</a></li>
+                    <li><a href="crop-advice.html" data-lang="nav_crop">Crop Advice</a></li>
+                    <li><a href="weather.html" data-lang="nav_weather">Weather</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="market.html" data-lang="nav_market">Live Mandi Prices</a></li>
+                    <li><a href="kisan-pool.html">Kisan-Pool</a></li>
+                    <li><a href="expert-chat.html" data-lang="nav_chat">Chat with Experts</a></li>
+                    <li><a href="#">Soil Testing Info</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="schemes.html" data-lang="nav_schemes">Government Schemes</a></li>
+                    <li><a href="#">Farming Subsidies</a></li>
+                    <li><a href="#">Kisan Call Center</a></li>
+                    <li><a href="contact.html" data-lang="nav_contact">Contact Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> FarmAdvisor. Built for Indian Farmers.</p>
+        </div>
+    </footer>
+
+    <!-- Modal for Join -->
+    <div class="modal-overlay" id="joinModal">
+        <div class="modal-content">
+            <h2 style="margin-bottom:15px; color:var(--primary-green);">✅ Request Sent!</h2>
+            <p id="modalMessage">The driver will contact you at your registered mobile number within 2 hours.</p>
+            <button class="btn-amber" style="margin-top:20px; width:100%;" onclick="closeJoinModal()">Got it</button>
+        </div>
+    </div>
+    
+    <!-- Toast Message -->
+    <div class="kp-toast" id="kpToast">🎉 Your ride is posted! Farmers in your area will see it now.</div>
+
+    <script src="js/main.js"></script>
+    <script src="translations.js"></script>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // --- MOCK DATA ---
+        const initialMockRides = [
+            { id: 'm1', driver: 'Ramesh Kumar', fromVill: 'Doddaballapur', fromDist: 'Bangalore Rural', to: 'Kolar APMC Mandi', state: 'Karnataka', date: '2026-05-16', space: 800, cost: 600, crops: 'Tomato', joined: 1, max: 4, myRide: false, contact: '9876543210' },
+            { id: 'm2', driver: 'Suresh Patil', fromVill: 'Haveri', fromDist: 'North Karnataka', to: 'Hubli Agricultural Market', state: 'Karnataka', date: '2026-05-17', space: 500, cost: 450, crops: 'Cotton, Soybean', joined: 2, max: 4, myRide: false, contact: '9876543211' },
+            { id: 'm3', driver: 'Mohan Gowda', fromVill: 'Mandya', fromDist: 'Karnataka', to: 'Bangalore APMC (Yeshwanthpur)', state: 'Karnataka', date: '2026-05-18', space: 1200, cost: 500, crops: 'Sugarcane', joined: 0, max: 4, myRide: false, contact: '9876543212' },
+            { id: 'm4', driver: 'Ajay Singh', fromVill: 'Ludhiana', fromDist: 'Punjab', to: 'Amritsar Grain Market', state: 'Punjab', date: '2026-05-16', space: 2000, cost: 350, crops: 'Wheat', joined: 3, max: 4, myRide: false, contact: '9876543213' },
+            { id: 'm5', driver: 'Venkat Reddy', fromVill: 'Kurnool', fromDist: 'Andhra Pradesh', to: 'Hyderabad Bowenpally Market', state: 'Andhra Pradesh', date: '2026-05-19', space: 600, cost: 700, crops: 'Chilli, Onion', joined: 1, max: 4, myRide: false, contact: '9876543214' },
+            { id: 'm6', driver: 'Prakash Desai', fromVill: 'Nashik', fromDist: 'Maharashtra', to: 'Mumbai Crawford Market', state: 'Maharashtra', date: '2026-05-21', space: 900, cost: 800, crops: 'Grapes, Onion', joined: 2, max: 4, myRide: false, contact: '9876543215' }
+        ];
+
+        // --- APP LOGIC ---
+        function getRides() {
+            const saved = localStorage.getItem('kisanpool_rides');
+            let rides = saved ? JSON.parse(saved) : [];
+            if(rides.length === 0) {
+                rides = initialMockRides;
+                saveRides(rides);
+            }
+            return rides;
+        }
+
+        function saveRides(rides) {
+            localStorage.setItem('kisanpool_rides', JSON.stringify(rides));
+        }
+
+        function renderBoard(filterData = {}) {
+            const rides = getRides();
+            const grid = document.getElementById('rides-grid');
+            grid.innerHTML = '';
+            
+            // Apply filters
+            let filteredRides = rides;
+            if (filterData.state) {
+                filteredRides = filteredRides.filter(r => r.state === filterData.state);
+            }
+            if (filterData.mandi) {
+                filteredRides = filteredRides.filter(r => r.to.toLowerCase().includes(filterData.mandi.toLowerCase()));
+            }
+            if (filterData.date && filterData.date !== 'Any') {
+                const today = new Date();
+                today.setHours(0,0,0,0);
+                
+                filteredRides = filteredRides.filter(r => {
+                    const rideDate = new Date(r.date);
+                    if (filterData.date === 'Today') {
+                        return rideDate.getTime() === today.getTime();
+                    } else if (filterData.date === 'This Week') {
+                        const nextWeek = new Date(today);
+                        nextWeek.setDate(today.getDate() + 7);
+                        return rideDate >= today && rideDate <= nextWeek;
+                    }
+                    return true;
+                });
+            }
+            
+            if (filteredRides.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 40px;">No rides found matching your search.</div>';
+            }
+            
+            filteredRides.forEach(r => {
+                const isFull = r.joined >= r.max;
+                const dDate = new Date(r.date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short', year: 'numeric' });
+                
+                let btnHTML = isFull 
+                    ? `<button class="btn-amber kp-join-btn" disabled>🔴 Truck Full</button>`
+                    : `<button class="btn-amber kp-join-btn" onclick="joinRide('${r.id}')">Join This Ride</button>`;
+                
+                grid.innerHTML += `
+                    <div class="kp-card ${isFull ? 'full' : ''}">
+                        <div class="kp-card-header">
+                            <span style="font-size:1.5rem">🚛</span>
+                            <h3>${r.driver}</h3>
+                        </div>
+                        <div class="kp-detail"><strong>📍 FROM:</strong> ${r.fromVill}, ${r.fromDist}</div>
+                        <div class="kp-detail"><strong>🏪 TO:</strong> ${r.to}</div>
+                        <div class="kp-detail"><strong>📅 DATE:</strong> ${dDate}</div>
+                        <div class="kp-detail"><strong>⚖️ SPACE LEFT:</strong> ${r.space} kg</div>
+                        <div class="kp-detail"><strong>💰 COST SHARE:</strong> ₹${r.cost} per 100kg</div>
+                        <div class="kp-detail"><strong>🌾 Carrying:</strong> ${r.crops || 'N/A'}</div>
+                        <div class="kp-detail" id="contact-${r.id}" style="display:none; color:var(--primary-green);"><strong>📱 Contact:</strong> ${r.contact || 'Not available'}</div>
+                        
+                        ${btnHTML}
+                        <div class="kp-seats">[Seats: ${r.joined}/${r.max} farmers joined]</div>
+                    </div>
+                `;
+            });
+            
+            if (Object.keys(filterData).length === 0) {
+                renderMyRides();
+            }
+        }
+        
+        function filterRides() {
+            const state = document.getElementById('filter-state').value;
+            const mandi = document.getElementById('filter-mandi').value;
+            const date = document.getElementById('filter-date').value;
+            
+            renderBoard({ state, mandi, date });
+        }
+
+        function renderMyRides() {
+            const rides = getRides().filter(r => r.myRide);
+            const grid = document.getElementById('my-rides-grid');
+            
+            if(rides.length === 0) {
+                grid.innerHTML = `
+                    <div class="kp-empty" style="grid-column: 1 / -1;">
+                        <div style="font-size: 4rem; opacity: 0.5; margin-bottom: 20px;">🛣️</div>
+                        <h3>You haven't posted any rides yet.</h3>
+                        <p style="color:#666; margin-top:10px;">Post your first ride above!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = '';
+            rides.forEach(r => {
+                const dDate = new Date(r.date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short', year: 'numeric' });
+                grid.innerHTML += `
+                    <div class="kp-card">
+                        <div class="kp-card-header">
+                            <span style="font-size:1.5rem">🚛</span>
+                            <h3>${r.driver} (You)</h3>
+                        </div>
+                        <div class="kp-detail"><strong>📍 FROM:</strong> ${r.fromVill}, ${r.fromDist}</div>
+                        <div class="kp-detail"><strong>🏪 TO:</strong> ${r.to}</div>
+                        <div class="kp-detail"><strong>📅 DATE:</strong> ${dDate}</div>
+                        <div class="kp-detail"><strong>⚖️ SPACE LEFT:</strong> ${r.space} kg</div>
+                        <div class="kp-detail"><strong>💰 COST SHARE:</strong> ₹${r.cost} per 100kg</div>
+                        <div class="kp-seats" style="margin: 15px 0 5px; text-align:left; color:var(--primary-green); font-weight:bold;">${r.joined} farmers have joined</div>
+                        
+                        <div style="display:flex; gap:10px; margin-top:auto; padding-top:10px;">
+                            <button class="btn-outline-white" style="flex:1; border-color:var(--primary-green); color:var(--primary-green);" onclick="editRide('${r.id}')">Edit</button>
+                            <button class="btn-amber" style="flex:1; background:#d00000; color:white;" onclick="deleteRide('${r.id}')">Delete</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function joinRide(id) {
+            let rides = getRides();
+            let ride = rides.find(r => r.id === id);
+            if(ride && ride.joined < ride.max) {
+                ride.joined += 1;
+                saveRides(rides);
+                
+                document.getElementById('modalMessage').textContent = `${ride.driver} will contact you at your registered mobile number within 2 hours.`;
+                document.getElementById('joinModal').classList.add('active');
+                
+                // Show contact detail in UI temporarily if desired, or just re-render
+                renderBoard();
+            }
+        }
+        
+        function closeJoinModal() {
+            document.getElementById('joinModal').classList.remove('active');
+        }
+
+        function handlePostRide(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const mobile = document.getElementById('f_mobile').value;
+            
+            // basic validation
+            if(!/^[0-9]{10}$/.test(mobile)) {
+                document.getElementById('f_mobile').parentElement.classList.add('error');
+                return;
+            } else {
+                document.getElementById('f_mobile').parentElement.classList.remove('error');
+            }
+
+            const newRide = {
+                id: 'r_' + Date.now(),
+                driver: document.getElementById('f_name').value,
+                contact: mobile,
+                fromVill: document.getElementById('f_from_vill').value,
+                fromDist: document.getElementById('f_from_dist').value,
+                state: document.getElementById('f_state').value,
+                to: document.getElementById('f_to').value,
+                date: document.getElementById('f_date').value,
+                space: document.getElementById('f_space').value,
+                cost: document.getElementById('f_cost').value,
+                crops: document.getElementById('f_crops').value,
+                max: parseInt(document.getElementById('f_max_farmers').value),
+                joined: 0,
+                myRide: true
+            };
+            
+            // Edit existing ride logic could go here, but prompt says "Add at TOP"
+            let rides = getRides();
+            
+            // Check if editing (via hidden input or just rely on form clear for new)
+            if(form.dataset.editingId) {
+                const idx = rides.findIndex(r => r.id === form.dataset.editingId);
+                if(idx !== -1) {
+                    newRide.id = rides[idx].id;
+                    newRide.joined = rides[idx].joined;
+                    rides[idx] = newRide;
+                }
+                delete form.dataset.editingId;
+            } else {
+                rides.unshift(newRide);
+            }
+            
+            saveRides(rides);
+            renderBoard();
+            
+            // Toast
+            const toast = document.getElementById('kpToast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+            
+            form.reset();
+            window.scrollTo({ top: document.getElementById('load-board').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        function deleteRide(id) {
+            if(confirm("Are you sure you want to delete this ride?")) {
+                let rides = getRides();
+                rides = rides.filter(r => r.id !== id);
+                saveRides(rides);
+                renderBoard();
+            }
+        }
+
+        function editRide(id) {
+            let ride = getRides().find(r => r.id === id);
+            if(ride) {
+                document.getElementById('f_name').value = ride.driver;
+                document.getElementById('f_mobile').value = ride.contact || '';
+                document.getElementById('f_from_vill').value = ride.fromVill;
+                document.getElementById('f_from_dist').value = ride.fromDist;
+                document.getElementById('f_state').value = ride.state;
+                document.getElementById('f_to').value = ride.to;
+                document.getElementById('f_date').value = ride.date;
+                document.getElementById('f_space').value = ride.space;
+                document.getElementById('f_cost').value = ride.cost;
+                document.getElementById('f_crops').value = ride.crops || '';
+                document.getElementById('f_max_farmers').value = ride.max;
+                
+                document.getElementById('postRideForm').dataset.editingId = id;
+                window.scrollTo({ top: document.getElementById('post-ride').offsetTop - 100, behavior: 'smooth' });
+            }
+        }
+
+        function updateSavings() {
+            const dist = document.getElementById('distSlider').value;
+            const kg = document.getElementById('kgSlider') ? document.getElementById('kgSlider').value : 1000;
+            document.getElementById('distVal').textContent = dist + ' KM';
+            if (document.getElementById('kgVal')) document.getElementById('kgVal').textContent = kg + ' KG';
+            const savings = Math.round((dist * 8) * (kg / 1000));
+            document.getElementById('savingVal').textContent = '₹' + savings;
+        }
+
+        // --- ANIMATED COUNTERS ---
+        function initCounters() {
+            const counters = document.querySelectorAll('.kp-counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const endValue = parseInt(target.getAttribute('data-target'));
+                        const prefix = target.getAttribute('data-prefix') || '';
+                        
+                        let startValue = 0;
+                        const duration = 2000;
+                        const frameRate = 30;
+                        const totalFrames = Math.round((duration / 1000) * frameRate);
+                        const increment = endValue / totalFrames;
+                        
+                        const timer = setInterval(() => {
+                            startValue += increment;
+                            if (startValue >= endValue) {
+                                clearInterval(timer);
+                                target.innerText = prefix + endValue.toLocaleString();
+                            } else {
+                                target.innerText = prefix + Math.floor(startValue).toLocaleString();
+                            }
+                        }, 1000 / frameRate);
+                        
+                        observer.unobserve(target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            counters.forEach(c => observer.observe(c));
+        }
+
+        // Init
+        window.addEventListener('DOMContentLoaded', () => {
+            renderBoard();
+            initCounters();
+        });
+    </script>
+</body>
+</html>
+
+

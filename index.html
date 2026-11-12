@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmAdvisor - Smart Advice. Stronger Farms.</title>
+    <meta name="description" content="Digital advisory platform for Indian farmers featuring real-time weather, market prices, and expert advice.">
+    <meta name="keywords" content="farming, agriculture, india, weather, market prices, crops, advisor">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/new_home.css">
+    <!-- AOS for Scroll Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar glass">
+        <a href="index.html" class="logo">
+            <span class="emoji">🌱</span> FarmAdvisor
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="index.html" data-lang="nav_home">Home</a></li>
+            <li><a href="crop-advice.html" data-lang="nav_crop">Crop Advice</a></li>
+            <li><a href="weather.html" data-lang="nav_weather">Weather</a></li>
+            <li><a href="market.html" data-lang="nav_market">Market Prices</a></li>
+            <li><a href="schemes.html" data-lang="nav_schemes">Govt Schemes</a></li>
+            <li><a href="kisan-pool.html" data-lang="nav_kisan_pool">🚛 Kisan-Pool</a></li>
+            <li><a href="renting.html" data-lang="nav_renting">🚜 Rentals</a></li>
+            <li><a href="expert-chat.html" data-lang="nav_chat">Expert Chat</a></li>
+            <li><a href="contact.html" data-lang="nav_contact">Contact</a></li>
+        </ul>
+        
+        <div class="nav-actions">
+            <div class="lang-switcher" id="langSwitcher">
+                <button class="lang-btn" onclick="toggleLangMenu()">
+                    🌐 <span id="currentLangLabel">EN</span> ▼
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-option active" onclick="setLanguage('en')">English (EN)</div>
+                    <div class="lang-option" onclick="setLanguage('hi')">Hindi (HI)</div>
+                    <div class="lang-option" onclick="setLanguage('kn')">Kannada (KN)</div>
+                    <div class="lang-option" onclick="setLanguage('te')">Telugu (TE)</div>
+                    <div class="lang-option" onclick="setLanguage('ta')">Tamil (TA)</div>
+                    <div class="lang-option" onclick="setLanguage('mr')">Marathi (MR)</div>
+                    <div class="lang-option" onclick="setLanguage('pa')">Punjabi (PA)</div>
+                    <div class="lang-option" onclick="setLanguage('bn')">Bengali (BN)</div>
+                </div>
+            </div>
+            <a href="login.html" class="btn btn-outline nav-login" data-lang="nav_login">Login</a>
+            <a href="signup.html" class="btn btn-green" data-lang="nav_signup">Sign Up</a>
+        </div>
+        
+        <!-- Mobile Hamburger Menu -->
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="nh-hero">
+            <div class="nh-hero-overlay"></div>
+            <div class="nh-hero-content">
+                <h1 data-lang="home_hero_title" data-aos="fade-up">Smart Advice.<br>Stronger Farms.</h1>
+                <p data-lang="home_hero_sub" data-aos="fade-up" data-aos-delay="100">Your all-in-one digital partner for better farming decisions, higher income, and a sustainable future.</p>
+                <div class="nh-hero-actions" data-aos="fade-up" data-aos-delay="200">
+                    <a href="crop-advice.html" class="btn btn-amber nh-btn" data-lang="home_btn1">Get Crop Advice &rarr;</a>
+                    <a href="market.html" class="btn btn-outline-white nh-btn" data-lang="home_btn2">Explore Dashboard</a>
+                </div>
+            </div>
+            
+            <div class="nh-hero-stats" data-aos="fade-up" data-aos-delay="300">
+                <div class="nh-stat-item">
+                    <div class="nh-stat-icon">🎯</div>
+                    <div>
+                        <h3 data-lang="stat_farmers">2.5M+</h3>
+                        <p data-lang="stat_farmers_desc">Farmers Empowered</p>
+                    </div>
+                </div>
+                <div class="nh-stat-item">
+                    <div class="nh-stat-icon">📍</div>
+                    <div>
+                        <h3 data-lang="stat_districts">150+</h3>
+                        <p data-lang="stat_districts_desc">Districts Covered</p>
+                    </div>
+                </div>
+                <div class="nh-stat-item">
+                    <div class="nh-stat-icon">🌱</div>
+                    <div>
+                        <h3 data-lang="stat_crops">50+</h3>
+                        <p data-lang="stat_crops_desc">Crops Supported</p>
+                    </div>
+                </div>
+                <div class="nh-stat-item">
+                    <div class="nh-stat-icon">💰</div>
+                    <div>
+                        <h3 data-lang="stat_income">₹1200 Cr+</h3>
+                        <p data-lang="stat_income_desc">Farm Income Generated</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="nh-about">
+            <!-- Floating Background Elements -->
+            <img src="images/rice_float.png" alt="" class="floating-crop float-1">
+            <img src="images/wheat_float.png" alt="" class="floating-crop float-2">
+            <img src="images/leaf_float.png" alt="" class="floating-crop float-3">
+            
+            <div class="nh-container" style="position: relative; z-index: 1;">
+                <div class="nh-about-grid">
+                    <div class="nh-about-text" data-aos="fade-right">
+                        <span class="nh-label" data-lang="about_label">ABOUT FARMADVISOR</span>
+                        <h2 data-lang="about_title">Technology for Farmers.<br>Growth for Generations.</h2>
+                        <p data-lang="about_desc">FarmAdvisor brings together real-time data, expert advice, and community support to help farmers make smart decisions and grow better every season.</p>
+                        
+                        <ul class="nh-about-list">
+                            <li><span class="nh-check">✅</span> <span data-lang="about_pt1">AI-Powered Crop Recommendations</span></li>
+                            <li><span class="nh-check">✅</span> <span data-lang="about_pt2">Live Weather & Market Updates</span></li>
+                            <li><span class="nh-check">✅</span> <span data-lang="about_pt3">Government Schemes in One Click</span></li>
+                            <li><span class="nh-check">✅</span> <span data-lang="about_pt4">Community Logistics & Rentals</span></li>
+                        </ul>
+                        
+                        <a href="about.html" class="btn btn-green nh-btn" data-lang="about_btn">Know More About Us &rarr;</a>
+                    </div>
+                    
+                    <div class="nh-about-visual" data-aos="fade-left">
+                        <div class="nh-about-img-wrap">
+                            <img src="images/about_farmer.png" alt="Indian Farmer using Tablet with AI HUD">
+                            <div class="nh-trusted-badge">
+                                <div class="nh-avatars">
+                                    <img src="https://i.pravatar.cc/100?img=11" alt="Farmer">
+                                    <img src="https://i.pravatar.cc/100?img=12" alt="Farmer">
+                                    <img src="https://i.pravatar.cc/100?img=13" alt="Farmer">
+                                </div>
+                                <div>
+                                    <small>Trusted by</small><br>
+                                    <strong data-lang="stat_farmers">2.5M+</strong> <strong>Farmers</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services/Offer Section -->
+        <section class="nh-services">
+            <div class="nh-container">
+                <div class="nh-section-header" data-aos="fade-up">
+                    <span class="nh-label nh-label-light" data-lang="offer_label">WHAT WE OFFER</span>
+                    <h2 data-lang="offer_title">Everything You Need, All in One Place</h2>
+                </div>
+                
+                <div class="nh-services-grid">
+                    <a href="crop-advice.html" class="nh-service-card" data-aos="fade-up" data-aos-delay="50">
+                        <div class="nh-service-icon">🌱</div>
+                        <h3 data-lang="offer_card1_title">Crop Advisory</h3>
+                        <p data-lang="offer_card1_desc">AI-powered crop suggestions based on your soil, weather & season.</p>
+                    </a>
+                    <a href="weather.html" class="nh-service-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="nh-service-icon">🌤️</div>
+                        <h3 data-lang="offer_card2_title">Live Weather</h3>
+                        <p data-lang="offer_card2_desc">7-day local forecast with agri-tips and real-time alerts.</p>
+                    </a>
+                    <a href="market.html" class="nh-service-card" data-aos="fade-up" data-aos-delay="150">
+                        <div class="nh-service-icon">📈</div>
+                        <h3 data-lang="offer_card3_title">Market Prices</h3>
+                        <p data-lang="offer_card3_desc">Live mandi prices, trends & insights to help you sell smart.</p>
+                    </a>
+                    <a href="schemes.html" class="nh-service-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="nh-service-icon">🏛️</div>
+                        <h3 data-lang="offer_card4_title">Government Schemes</h3>
+                        <p data-lang="offer_card4_desc">Find and apply for schemes like PM-KISAN, KCC, Fasal Bima & more.</p>
+                    </a>
+                    <a href="kisan-pool.html" class="nh-service-card" data-aos="fade-up" data-aos-delay="250">
+                        <div class="nh-service-icon">🚛</div>
+                        <h3 data-lang="offer_card5_title">Kisan-Pool Logistics</h3>
+                        <p data-lang="offer_card5_desc">Share vehicles & save on transport. Book or offer ride space.</p>
+                    </a>
+                    <a href="renting.html" class="nh-service-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="nh-service-icon">🚜</div>
+                        <h3 data-lang="offer_card6_title">Rent Farm Equipment</h3>
+                        <p data-lang="offer_card6_desc">Rent tractors, tools & machinery or list yours to earn.</p>
+                    </a>
+                    <a href="renting.html" class="nh-service-card" data-aos="fade-up" data-aos-delay="350">
+                        <div class="nh-service-icon">🌾</div>
+                        <h3 data-lang="offer_card7_title">Land Leasing</h3>
+                        <p data-lang="offer_card7_desc">Lease in or out land with flexible rent or profit-sharing options.</p>
+                    </a>
+                    <a href="expert-chat.html" class="nh-service-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="nh-service-icon">🤖</div>
+                        <h3 data-lang="offer_card8_title">AI Expert Chat</h3>
+                        <p data-lang="offer_card8_desc">Talk to our AI assistant in your language. Get instant farming advice.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculator Section -->
+        <section class="nh-calculator-sec">
+            <!-- Floating Background Elements -->
+            <img src="images/leaf_float.png" alt="" class="floating-crop float-1" style="animation-delay: 1.5s;">
+            <img src="images/wheat_float.png" alt="" class="floating-crop float-3" style="top: auto; bottom: -30px; left: 40%; right: auto; animation-delay: 3.5s;">
+            
+            <div class="nh-container" style="position: relative; z-index: 1;">
+                <div class="nh-calc-grid">
+                    <div class="nh-calc-text" data-aos="fade-right">
+                        <span class="nh-label" data-lang="save_label">SAVE MORE WITH KISAN-POOL</span>
+                        <h2 data-lang="save_title">Calculate Your Transport Savings</h2>
+                        <p data-lang="save_desc">Share your vehicle and reduce transport costs. Move more, spend less, earn more!</p>
+                        
+                        <div class="nh-calc-box">
+                            <div class="nh-slider-wrap">
+                                <label><span data-lang="save_dist">Select Distance</span> <strong id="nhDistVal">120 km</strong></label>
+                                <input type="range" id="nhDist" min="10" max="500" value="120">
+                            </div>
+                            <div class="nh-slider-wrap">
+                                <label><span data-lang="save_weight">Crop Weight</span> <strong id="nhKgVal">5000 kg</strong></label>
+                                <input type="range" id="nhKg" min="100" max="10000" step="100" value="5000">
+                            </div>
+                            
+                            <div class="nh-calc-result">
+                                <div>
+                                    <span data-lang="save_result">You Save</span>
+                                    <h3 id="nhSavingResult">₹4,800</h3>
+                                </div>
+                                <div class="nh-calc-icon">💰</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nh-calc-visual" data-aos="fade-left">
+                        <img src="images/about_tractor.png" alt="Tractor loaded with crop bags">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="nh-faq">
+            <!-- Floating Background Elements -->
+            <img src="images/chili_float.png" alt="" class="floating-crop float-1" style="animation-delay: 0.5s; width: 150px; opacity: 0.5;">
+            <img src="images/sunflower_float.png" alt="" class="floating-crop float-2" style="top: auto; bottom: 20%; left: auto; right: -50px; width: 250px; animation-delay: 2.5s; opacity: 0.4;">
+            
+            <div class="nh-container" style="position: relative; z-index: 1;">
+                <div class="nh-faq-grid">
+                    <div class="nh-faq-header" data-aos="fade-right">
+                        <h2 data-lang="faq_title">GOT QUESTIONS? WE'VE GOT YOU COVERED.</h2>
+                        <p data-lang="faq_sub">Find quick answers to common questions about using FarmAdvisor.</p>
+                    </div>
+                    <div class="nh-faq-list" data-aos="fade-left">
+                        <div class="nh-faq-item">
+                            <button class="nh-faq-btn"><span data-lang="faq_q1">How do I get crop advice for my farm?</span> <span class="nh-faq-icon">+</span></button>
+                            <div class="nh-faq-content"><p>Simply go to the Crop Advice tab, enter your state, soil type, and season, and our AI will recommend the best crops instantly.</p></div>
+                        </div>
+                        <div class="nh-faq-item">
+                            <button class="nh-faq-btn"><span data-lang="faq_q2">Is the weather forecast accurate?</span> <span class="nh-faq-icon">+</span></button>
+                            <div class="nh-faq-content"><p>Yes, we use hyper-local meteorological data providing accuracy down to your specific district for the next 7 days.</p></div>
+                        </div>
+                        <div class="nh-faq-item">
+                            <button class="nh-faq-btn"><span data-lang="faq_q3">How can I check mandi prices?</span> <span class="nh-faq-icon">+</span></button>
+                            <div class="nh-faq-content"><p>Visit the Market Prices tab to see live, real-time prices from mandis across the country.</p></div>
+                        </div>
+                        <div class="nh-faq-item">
+                            <button class="nh-faq-btn"><span data-lang="faq_q4">How does Kisan-Pool logistics work?</span> <span class="nh-faq-icon">+</span></button>
+                            <div class="nh-faq-content"><p>You can share an empty truck with nearby farmers, splitting the transport costs and saving money.</p></div>
+                        </div>
+                        <div class="nh-faq-item">
+                            <button class="nh-faq-btn"><span data-lang="faq_q5">Are my data and personal details safe?</span> <span class="nh-faq-icon">+</span></button>
+                            <div class="nh-faq-content"><p>Absolutely. Your data is encrypted and never shared with third parties without your explicit consent.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="nh-testimonials">
+            <!-- Floating Background Elements -->
+            <img src="images/cotton_float.png" alt="" class="floating-crop float-3" style="top: 10%; right: auto; left: -50px; width: 200px; animation-delay: 1.2s; opacity: 0.5;">
+            <img src="images/corn_float.png" alt="" class="floating-crop float-2" style="bottom: 10%; right: -20px; left: auto; width: 220px; animation-delay: 3.2s; opacity: 0.5;">
+            
+            <div class="nh-container" style="position: relative; z-index: 1;">
+                <h2 class="nh-section-title-center" data-lang="testi_title" data-aos="fade-up">WHAT FARMERS ARE SAYING ABOUT US</h2>
+                
+                <div class="nh-testi-grid" data-aos="fade-up" data-aos-delay="100">
+                    <div class="nh-testi-card">
+                        <div class="nh-quote-icon">"</div>
+                        <p class="nh-testi-text" data-lang="testi_1">FarmAdvisor helped me choose the right crop; my income increased by 40%!</p>
+                        <div class="nh-testi-author">
+                            <img src="https://i.pravatar.cc/100?img=33" alt="Farmer">
+                            <div>
+                                <h4>Ramesh Patel</h4>
+                                <span>Farmer, Madhya Pradesh</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="nh-testi-card">
+                        <div class="nh-quote-icon">"</div>
+                        <p class="nh-testi-text" data-lang="testi_2">The weather alerts saved my crop from heavy rain. Very useful platform!</p>
+                        <div class="nh-testi-author">
+                            <img src="https://i.pravatar.cc/100?img=11" alt="Farmer">
+                            <div>
+                                <h4>Suresh Yadav</h4>
+                                <span>Farmer, Maharashtra</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nh-testi-card">
+                        <div class="nh-quote-icon">"</div>
+                        <p class="nh-testi-text" data-lang="testi_3">Kisan-Pool is a great idea. I save money and help other farmers too.</p>
+                        <div class="nh-testi-author">
+                            <img src="https://i.pravatar.cc/100?img=53" alt="Farmer">
+                            <div>
+                                <h4>Baldev Singh</h4>
+                                <span>Farmer, Punjab</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col" style="grid-column: span 2;">
+                <div class="footer-logo">
+                    🌱 FarmAdvisor
+                </div>
+                <p class="footer-tagline">Real-time weather, market prices, and expert advice — all in one place for Indian farmers.</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" title="WhatsApp">📱</a>
+                    <a href="#" class="social-icon" title="YouTube">▶️</a>
+                    <a href="#" class="social-icon" title="Twitter/X">🐦</a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html" data-lang="nav_home">Home</a></li>
+                    <li><a href="crop-advice.html" data-lang="nav_crop">Crop Advice</a></li>
+                    <li><a href="weather.html" data-lang="nav_weather">Weather</a></li>
+                    <li><a href="schemes.html" data-lang="nav_schemes">Govt Schemes</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="kisan-pool.html" data-lang="nav_kisan_pool">Kisan-Pool</a></li>
+                    <li><a href="renting.html" data-lang="nav_renting">Rentals</a></li>
+                    <li><a href="renting.html">Land Leasing</a></li>
+                    <li><a href="expert-chat.html" data-lang="nav_chat">AI Chat</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="contact.html">Help Center</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col" style="text-align: right;">
+                <h4>Download Our App</h4>
+                <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" style="height: 40px; cursor: pointer;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" style="height: 40px; cursor: pointer;">
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> FarmAdvisor. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="translations.js"></script>
+    <script src="js/main.js"></script>
+    <!-- AOS for Scroll Animations -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 50
+        });
+
+        // Homepage Calculator Logic
+        const distSlider = document.getElementById('nhDist');
+        const kgSlider = document.getElementById('nhKg');
+        const distVal = document.getElementById('nhDistVal');
+        const kgVal = document.getElementById('nhKgVal');
+        const result = document.getElementById('nhSavingResult');
+
+        function updateHCSavings() {
+            const dist = parseInt(distSlider.value);
+            const kg = parseInt(kgSlider.value);
+            distVal.textContent = dist + ' km';
+            kgVal.textContent = kg + ' kg';
+            
+            // Formula similar to kisan pool
+            const savings = Math.round((dist * 8) * (kg / 1000));
+            result.textContent = '₹' + savings.toLocaleString('en-IN');
+        }
+
+        if(distSlider && kgSlider) {
+            distSlider.addEventListener('input', updateHCSavings);
+            kgSlider.addEventListener('input', updateHCSavings);
+            updateHCSavings();
+        }
+
+        // FAQ Accordion
+        const faqBtns = document.querySelectorAll('.nh-faq-btn');
+        faqBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                // Close all others
+                document.querySelectorAll('.nh-faq-item').forEach(faq => {
+                    faq.classList.remove('active');
+                    faq.querySelector('.nh-faq-icon').textContent = '+';
+                });
+                
+                if(!isActive) {
+                    item.classList.add('active');
+                    btn.querySelector('.nh-faq-icon').textContent = '-';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

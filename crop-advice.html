@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmAdvisor - Crop Advice & Harvesting Tips</title>
+    <meta name="description" content="AI-based crop recommendations, detailed cultivation guides, and harvesting best practices.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="crop-page">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar glass scrolled" style="background: rgba(248, 244, 227, 0.95); box-shadow: var(--shadow-md);">
+        <a href="index.html" class="logo" style="color: var(--primary-green);" >
+            <span class="emoji">🌱</span> FarmAdvisor
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="index.html" style="color: var(--text-brown);" data-lang="nav_home">Home</a></li>
+            <li><a href="crop-advice.html" style="color: var(--text-brown);" data-lang="nav_crop">Crop Advice</a></li>
+            <li><a href="weather.html" style="color: var(--text-brown);" data-lang="nav_weather">Weather</a></li>
+            <li><a href="market.html" style="color: var(--text-brown);" data-lang="nav_market">Market Prices</a></li>
+            <li><a href="schemes.html" style="color: var(--text-brown);" data-lang="nav_schemes">Govt Schemes</a></li>`n            <li><a href="kisan-pool.html" style="color: var(--text-brown);" data-lang="nav_kisan_pool">🚛 Kisan-Pool</a></li>
+            <li><a href="expert-chat.html" style="color: var(--text-brown);" data-lang="nav_chat">Expert Chat</a></li>
+            <li><a href="contact.html" style="color: var(--text-brown);" data-lang="nav_contact">Contact</a></li>
+        </ul>
+        
+                <div class="nav-actions">
+            <div class="lang-switcher" id="langSwitcher">
+                <button class="lang-btn" onclick="toggleLangMenu()">
+                    🌒 <span id="currentLangLabel">EN</span> v
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-option active" onclick="setLanguage('en')">English (EN)</div>
+                    <div class="lang-option" onclick="setLanguage('hi')">Hindi (HI)</div>
+                    <div class="lang-option" onclick="setLanguage('kn')">Kannada (KN)</div>
+                    <div class="lang-option" onclick="setLanguage('te')">Telugu (TE)</div>
+                    <div class="lang-option" onclick="setLanguage('ta')">Tamil (TA)</div>
+                    <div class="lang-option" onclick="setLanguage('mr')">Marathi (MR)</div>
+                    <div class="lang-option" onclick="setLanguage('pa')">Punjabi (PA)</div>
+                    <div class="lang-option" onclick="setLanguage('bn')">Bengali (BN)</div>
+                </div>
+            </div>
+            <a href="#" class="btn btn-outline nav-login" style="color: var(--primary-green); border-color: var(--primary-green);" data-lang="nav_login">Login</a>
+            <a href="#" class="btn btn-green" data-lang="nav_signup">Sign Up</a>
+        </div>
+        
+        <div class="hamburger">
+            <span style="background-color: var(--primary-green);"></span>
+            <span style="background-color: var(--primary-green);"></span>
+            <span style="background-color: var(--primary-green);"></span>
+        </div>
+    </nav>
+
+    <!-- Crop Selector Hero -->
+    <header class="crop-header">
+        <h1>Find Cultivation Guides</h1>
+        <div class="crop-search">
+            <input type="text" id="crop-search-input" placeholder="Search your crop... (e.g. Wheat, Tomato)">
+            <button class="btn btn-amber" id="crop-search-btn">ðŸ”</button>
+        </div>
+        <div class="crop-filters" id="category-filters">
+            <div class="filter-chip active" data-filter="All">All Crops</div>
+            <div class="filter-chip" data-filter="Kharif">Kharif</div>
+            <div class="filter-chip" data-filter="Rabi">Rabi</div>
+            <div class="filter-chip" data-filter="Zaid">Zaid</div>
+            <div class="filter-chip" data-filter="Vegetables">Vegetables</div>
+            <div class="filter-chip" data-filter="Fruits">Fruits</div>
+            <div class="filter-chip" data-filter="Cash Crops">Cash Crops</div>
+        </div>
+    </header>
+
+    <!-- Crop Grid -->
+    <main>
+        <div class="crop-grid" id="crop-grid">
+            <!-- Populated by JS -->
+        </div>
+
+        <!-- AI Crop Recommendation Section -->
+        <section class="ai-section">
+            <div class="section-title">Not sure what to plant?</div>
+            <p style="text-align: center; margin-bottom: 40px; color: #666;">Use our AI algorithm to find the best crop for your land based on soil, water, and region.</p>
+            
+            <div class="ai-container">
+                <div class="ai-form-side">
+                    <h3 style="margin-bottom: 20px; font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary-green);">Enter Farm Details</h3>
+                    <form id="ai-recommender-form" onsubmit="event.preventDefault(); window.getRecommendations();">
+                        <div class="form-group">
+                            <label>State</label>
+                            <select id="rec-state" required>
+                                <option value="" disabled selected>Select State</option>
+                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                <option value="Assam">Assam</option>
+                                <option value="Bihar">Bihar</option>
+                                <option value="Chhattisgarh">Chhattisgarh</option>
+                                <option value="Goa">Goa</option>
+                                <option value="Gujarat">Gujarat</option>
+                                <option value="Haryana">Haryana</option>
+                                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                <option value="Jharkhand">Jharkhand</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Kerala">Kerala</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Manipur">Manipur</option>
+                                <option value="Meghalaya">Meghalaya</option>
+                                <option value="Mizoram">Mizoram</option>
+                                <option value="Nagaland">Nagaland</option>
+                                <option value="Odisha">Odisha</option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="Sikkim">Sikkim</option>
+                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Telangana">Telangana</option>
+                                <option value="Tripura">Tripura</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="Uttarakhand">Uttarakhand</option>
+                                <option value="West Bengal">West Bengal</option>
+                                <optgroup label="Union Territories">
+                                    <option value="Andaman & Nicobar Islands">Andaman & Nicobar Islands</option>
+                                    <option value="Chandigarh">Chandigarh</option>
+                                    <option value="Dadra & Nagar Haveli">Dadra & Nagar Haveli</option>
+                                    <option value="Daman & Diu">Daman & Diu</option>
+                                    <option value="Delhi (NCT)">Delhi (NCT)</option>
+                                    <option value="Jammu & Kashmir">Jammu & Kashmir</option>
+                                    <option value="Ladakh">Ladakh</option>
+                                    <option value="Lakshadweep">Lakshadweep</option>
+                                    <option value="Puducherry">Puducherry</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Sowing Season</label>
+                            <select id="rec-season" required>
+                                <option value="">Select Season</option>
+                                <option value="Monsoon (Kharif)">Monsoon (Kharif)</option>
+                                <option value="Winter (Rabi)">Winter (Rabi)</option>
+                                <option value="Summer (Zaid)">Summer (Zaid)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Soil Type</label>
+                            <select id="rec-soil" required>
+                                <option value="">Select Soil</option>
+                                <option value="Alluvial">Alluvial</option>
+                                <option value="Black">Black Soil (Regur)</option>
+                                <option value="Red">Red & Yellow</option>
+                                <option value="Laterite">Laterite</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Water Availability</label>
+                            <select id="rec-water" required>
+                                <option value="">Select Water Level</option>
+                                <option value="High">High (Canal/Tubewell)</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low (Rainfed only)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-green" style="width: 100%; margin-top: 10px;">Get Recommendation 🤖</button>
+                    </form>
+                </div>
+                <div class="ai-result-side" id="rec-result">
+                    <div style="text-align: center;">
+                        <span style="font-size: 4rem;">🔮</span>
+                        <h3 style="margin: 15px 0; font-family: var(--font-heading); font-size: 2rem;">Awaiting Data</h3>
+                        <p style="color: rgba(255,255,255,0.8);">Fill out the form on the left to see your personalized, AI-driven crop recommendations based on agronomist intelligence.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Harvesting Tips -->
+        <section class="harvesting" id="harvesting">
+            <h2 class="section-title">🌾 Harvesting Best Practices</h2>
+            <div class="harvesting-grid">
+                <div class="harvest-card">
+                    <div class="harvest-icon">💧</div>
+                    <div class="harvest-content">
+                        <h4>Right Moisture Level</h4>
+                        <p>Harvest grains when grains have 14% to 20% moisture to prevent mechanical damage and fungal growth.</p>
+                    </div>
+                </div>
+                <div class="harvest-card">
+                    <div class="harvest-icon">⏰</div>
+                    <div class="harvest-content">
+                        <h4>Best Time of Day</h4>
+                        <p>Harvest vegetables in the early morning or late evening. Avoid the midday heat to prevent wilting and preserve crop quality.</p>
+                    </div>
+                </div>
+                <div class="harvest-card">
+                    <div class="harvest-icon">📦</div>
+                    <div class="harvest-content">
+                        <h4>Post-Harvest Storage</h4>
+                        <p>Store produce in well-ventilated, dry storage areas. Ensure sheds protect crops from direct sunlight and rodents.</p>
+                    </div>
+                </div>
+                <div class="harvest-card">
+                    <div class="harvest-icon">📉</div>
+                    <div class="harvest-content">
+                        <h4>Reduce Wastage</h4>
+                        <p>Use clean and sharp tools to avoid bruising. Damaged crops emit ethylene gas which accelerates rotting in healthy crops.</p>
+                    </div>
+                </div>
+                <div class="harvest-card">
+                    <div class="harvest-icon">🔪</div>
+                    <div class="harvest-content">
+                        <h4>Tools & Equipment</h4>
+                        <p>Ensure combine harvesters and sickles are properly calibrated and sharpened before the harvesting season starts.</p>
+                    </div>
+                </div>
+                <div class="harvest-card">
+                    <div class="harvest-icon">☁️</div>
+                    <div class="harvest-content">
+                        <h4>Drying Techniques</h4>
+                        <p>When sun-drying, lay crops on a clean tarpaulin instead of bare soil. This avoids dust contamination and ensures uniform drying.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Crop Details -->
+    <div class="crop-modal-overlay" id="crop-modal">
+        <div class="crop-modal">
+            <button class="close-modal" id="close-modal-btn">×</button>
+            <img src="" alt="Crop" class="modal-header-img" id="modal-img">
+            <div class="modal-body">
+                <h2 class="modal-title" id="modal-title">Crop Name</h2>
+                <div class="modal-scientific" id="modal-scientific">Scientific Name</div>
+                
+                <h3 style="color: var(--primary-green); margin-bottom: 15px; margin-top: 10px;">Cultivation Lifecycle</h3>
+                <div class="modal-grid" style="gap: 15px; margin-bottom: 20px;">
+                    <div style="background: var(--background-cream); padding: 15px; border-radius: 12px; border-left: 4px solid var(--accent-amber);">
+                        <div style="font-size: 1.5rem; margin-bottom: 5px;">🌱</div>
+                        <h5 style="color: var(--primary-green); margin-bottom: 5px; font-size: 1.1rem;">Phase 1: Sowing & Prep</h5>
+                        <p id="modal-phase1" style="font-size: 0.95rem; color: #555; line-height: 1.4;">--</p>
+                    </div>
+                    <div style="background: var(--background-cream); padding: 15px; border-radius: 12px; border-left: 4px solid #2A9D8F;">
+                        <div style="font-size: 1.5rem; margin-bottom: 5px;">💧</div>
+                        <h5 style="color: var(--primary-green); margin-bottom: 5px; font-size: 1.1rem;">Phase 2: Irrigation & Care</h5>
+                        <p id="modal-phase2" style="font-size: 0.95rem; color: #555; line-height: 1.4;">--</p>
+                    </div>
+                    <div style="background: var(--background-cream); padding: 15px; border-radius: 12px; border-left: 4px solid #E76F51;">
+                        <div style="font-size: 1.5rem; margin-bottom: 5px;">🛡️</div>
+                        <h5 style="color: var(--primary-green); margin-bottom: 5px; font-size: 1.1rem;">Phase 3: Pest & Disease</h5>
+                        <p id="modal-phase3" style="font-size: 0.95rem; color: #555; line-height: 1.4;">--</p>
+                    </div>
+                    <div style="background: var(--background-cream); padding: 15px; border-radius: 12px; border-left: 4px solid #E9C46A;">
+                        <div style="font-size: 1.5rem; margin-bottom: 5px;">🌾</div>
+                        <h5 style="color: var(--primary-green); margin-bottom: 5px; font-size: 1.1rem;">Phase 4: Harvest & Yield</h5>
+                        <p id="modal-phase4" style="font-size: 0.95rem; color: #555; line-height: 1.4;">--</p>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--primary-green); margin-bottom: 10px;">Growth Stages</h3>
+                <div class="growth-bar" id="modal-growth">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col" style="grid-column: span 2;">
+                <div class="footer-logo">🌱 FarmAdvisor</div>
+                <p class="footer-tagline">Real-time weather, market prices, and expert advice — all in one place for Indian farmers.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul><li><a href="index.html" data-lang="nav_home">Home</a></li><li><a href="crop-advice.html" data-lang="nav_crop">Crop Advice</a></li></ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> FarmAdvisor. Built for Indian Farmers.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="translations.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/crop.js"></script>
+    <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+</body>
+</html>
+
+
+
+
+

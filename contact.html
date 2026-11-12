@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmAdvisor - Contact & Support</title>
+    <meta name="description" content="Get in touch with the FarmAdvisor team for technical support, expert advice, or partnership queries.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body style="background: var(--background-cream);">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar glass scrolled" style="background: rgba(248, 244, 227, 0.95); box-shadow: var(--shadow-md);">
+        <a href="index.html" class="logo" style="color: var(--primary-green);" >
+            <span class="emoji">🌱</span> FarmAdvisor
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="index.html" style="color: var(--text-brown);" data-lang="nav_home">Home</a></li>
+            <li><a href="crop-advice.html" style="color: var(--text-brown);" data-lang="nav_crop">Crop Advice</a></li>
+            <li><a href="weather.html" style="color: var(--text-brown);" data-lang="nav_weather">Weather</a></li>
+            <li><a href="market.html" style="color: var(--text-brown);" data-lang="nav_market">Market Prices</a></li>
+            <li><a href="schemes.html" style="color: var(--text-brown);" data-lang="nav_schemes">Govt Schemes</a></li>`n            <li><a href="kisan-pool.html" style="color: var(--text-brown);" data-lang="nav_kisan_pool">🚛 Kisan-Pool</a></li>
+            <li><a href="expert-chat.html" style="color: var(--text-brown);" data-lang="nav_chat">Expert Chat</a></li>
+            <li><a href="contact.html" style="color: var(--text-brown);" data-lang="nav_contact">Contact</a></li>
+        </ul>
+        
+                <div class="nav-actions">
+            <div class="lang-switcher" id="langSwitcher">
+                <button class="lang-btn" onclick="toggleLangMenu()">
+                    🌒 <span id="currentLangLabel">EN</span> v
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-option active" onclick="setLanguage('en')">English (EN)</div>
+                    <div class="lang-option" onclick="setLanguage('hi')">Hindi (HI)</div>
+                    <div class="lang-option" onclick="setLanguage('kn')">Kannada (KN)</div>
+                    <div class="lang-option" onclick="setLanguage('te')">Telugu (TE)</div>
+                    <div class="lang-option" onclick="setLanguage('ta')">Tamil (TA)</div>
+                    <div class="lang-option" onclick="setLanguage('mr')">Marathi (MR)</div>
+                    <div class="lang-option" onclick="setLanguage('pa')">Punjabi (PA)</div>
+                    <div class="lang-option" onclick="setLanguage('bn')">Bengali (BN)</div>
+                </div>
+            </div>
+            <a href="#" class="btn btn-outline nav-login" style="color: var(--primary-green); border-color: var(--primary-green);" data-lang="nav_login">Login</a>
+            <a href="#" class="btn btn-green" data-lang="nav_signup">Sign Up</a>
+        </div>
+        
+        <div class="hamburger">
+            <span style="background-color: var(--primary-green);"></span>
+            <span style="background-color: var(--primary-green);"></span>
+            <span style="background-color: var(--primary-green);"></span>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="contact-header">
+        <h1 style="font-family: var(--font-heading);">We're Here to Help</h1>
+        <p style="font-size: 1.1rem; opacity: 0.9;">Have a question about a crop, need technical support, or want to partner with us? Reach out today.</p>
+    </header>
+
+    <!-- Main Layout -->
+    <main>
+        <div class="contact-layout">
+            <!-- Contact Cards -->
+            <div class="contact-info">
+                <div class="contact-card">
+                    <div class="icon">📞</div>
+                    <h3>Toll-Free Helpline</h3>
+                    <p style="color: #666;">Available Mon-Sat (8 AM to 8 PM)</p>
+                    <p style="font-size: 1.2rem; font-weight: bold; margin-top: 10px; color: var(--text-brown);">1800-120-FARM (3276)</p>
+                </div>
+                <div class="contact-card">
+                    <div class="icon">💬</div>
+                    <h3>WhatsApp Support</h3>
+                    <p style="color: #666;">Message us for instant automated replies</p>
+                    <p style="font-size: 1.2rem; font-weight: bold; margin-top: 10px; color: var(--text-brown);">+91 98765 43210</p>
+                </div>
+                <div class="contact-card">
+                    <div class="icon">📧</div>
+                    <h3>Email Us</h3>
+                    <p style="color: #666;">For detailed queries & partnerships</p>
+                    <p style="font-size: 1.1rem; font-weight: bold; margin-top: 10px; color: var(--text-brown);">support@farmadvisor.in</p>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form-wrapper">
+                <h2 style="font-family: var(--font-heading);">Send us a Message</h2>
+                <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully! Our team will get back to you soon.'); this.reset();">
+                    <div class="form-group">
+                        <label for="name" data-lang="contact_name">Full Name</label>
+                        <input type="text" id="name" placeholder="e.g. Ramesh Kumar" required>
+                    </div>
+                    <div style="display: flex; gap: 20px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="+91" required>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="category">Query Category</label>
+                            <select id="category" required>
+                                <option value="">Select an option</option>
+                                <option value="agronomy">Crop & Farming Advice</option>
+                                <option value="technical">App/Website Technical Issue</option>
+                                <option value="schemes">Government Schemes Info</option>
+                                <option value="other">Other / General Feedback</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" data-lang="contact_message">Your Message</label>
+                        <textarea id="message" rows="5" placeholder="Please describe your issue or question in detail..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-green" style="width: 100%; font-size: 1.1rem; padding: 15px;">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- OpenStreetMap Embed Section -->
+        <section style="max-width: 1200px; margin: 0 auto 80px; padding: 0 5%;">
+            <h2 style="font-family: var(--font-heading); color: var(--primary-green); text-align: center; margin-bottom: 30px; font-size: 2.5rem;">Visit Our Main Office</h2>
+            <div id="map" style="width:100%; height:400px; border-radius:16px; overflow:hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08);"></div>
+            <script>
+              const map = L.map('map').setView([12.9354, 77.5358], 15); // RNSIT College coordinates
+              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Â© OpenStreetMap contributors',
+                maxZoom: 19
+              }).addTo(map);
+              
+              const marker = L.marker([12.9354, 77.5358]).addTo(map);
+              marker.bindPopup(`
+                <b>🌱 FarmAdvisor â€” RNSIT</b><br>
+                R.N.S. Institute of Technology<br>
+                Channasandra, Bangalore - 560098<br>
+                Karnataka, India
+              `).openPopup();
+            </script>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 style="font-family: var(--font-heading);">Frequently Asked Questions</h2>
+            
+            <div class="faq-container" id="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is FarmAdvisor completely free to use?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, the core features of FarmAdvisor including daily weather updates, live Mandi prices, and access to government scheme details are completely free for all farmers. Certain premium services, like on-demand video consultations with top experts, may have a nominal fee in the future.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How accurate are the Mandi prices?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our Mandi prices are aggregated daily from official sources like Agmarknet and local APMC networks. While we strive to provide the most recent data, prices can fluctuate intra-day. We recommend checking the 'Last Updated' timestamp on the market page.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can the AI FarmBot diagnose crop diseases from a photo?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Currently, the AI FarmBot can suggest potential diseases based on your text description of the symptoms. In an upcoming update, we will be launching an image-recognition feature that will allow you to upload photos of diseased leaves for instant diagnostics.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do I need an internet connection to use the app?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>While an active internet connection is required for live data (like weather and market prices), FarmAdvisor caches (saves) your previously viewed crop cultivation guides and offline tips, so you can access basic advice even when you are in the field with poor network coverage.</p>
+                    </div>
+                </div>
+                <div class="faq-item border-bottom-0">
+                    <div class="faq-question">
+                        How do I apply for the Government Schemes listed?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>FarmAdvisor helps you check your eligibility and understand the benefits. To actually apply, you must click the "Apply Now" button on the scheme card, which will redirect you to the official Government portal (e.g., pmkisan.gov.in) where you can securely submit your details.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col" style="grid-column: span 2;">
+                <div class="footer-logo">🌱 FarmAdvisor</div>
+                <p class="footer-tagline">Real-time weather, market prices, and expert advice â€” all in one place for Indian farmers.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul><li><a href="index.html" data-lang="nav_home">Home</a></li><li><a href="contact.html" data-lang="nav_contact">Contact Us</a></li></ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> FarmAdvisor. Built for Indian Farmers.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="translations.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/contact.js"></script>
+    <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+</body>
+</html>
+
+
+
+
+

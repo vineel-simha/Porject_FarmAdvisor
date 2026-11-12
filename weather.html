@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmAdvisor - Weather Dashboard</title>
+    <meta name="description" content="Real-time localized weather updates, forecasts, and agro-weather tips for farmers.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="weather-page">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar glass">
+        <a href="index.html" class="logo">
+            <span class="emoji">🌱</span> FarmAdvisor
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="index.html" data-lang="nav_home">Home</a></li>
+            <li><a href="crop-advice.html" data-lang="nav_crop">Crop Advice</a></li>
+            <li><a href="weather.html" data-lang="nav_weather">Weather</a></li>
+            <li><a href="market.html" data-lang="nav_market">Market Prices</a></li>
+            <li><a href="schemes.html" data-lang="nav_schemes">Govt Schemes</a></li>`n            <li><a href="kisan-pool.html" data-lang="nav_kisan_pool">🚛 Kisan-Pool</a></li>
+            <li><a href="renting.html" data-lang="nav_renting">🚜 Rentals</a></li>
+            <li><a href="expert-chat.html" data-lang="nav_chat">Expert Chat</a></li>
+            <li><a href="contact.html" data-lang="nav_contact">Contact</a></li>
+        </ul>
+        
+                <div class="nav-actions">
+            <div class="lang-switcher" id="langSwitcher">
+                <button class="lang-btn" onclick="toggleLangMenu()">
+                    🌒 <span id="currentLangLabel">EN</span> v
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-option active" onclick="setLanguage('en')">English (EN)</div>
+                    <div class="lang-option" onclick="setLanguage('hi')">Hindi (HI)</div>
+                    <div class="lang-option" onclick="setLanguage('kn')">Kannada (KN)</div>
+                    <div class="lang-option" onclick="setLanguage('te')">Telugu (TE)</div>
+                    <div class="lang-option" onclick="setLanguage('ta')">Tamil (TA)</div>
+                    <div class="lang-option" onclick="setLanguage('mr')">Marathi (MR)</div>
+                    <div class="lang-option" onclick="setLanguage('pa')">Punjabi (PA)</div>
+                    <div class="lang-option" onclick="setLanguage('bn')">Bengali (BN)</div>
+                </div>
+            </div>
+            <a href="#" class="btn btn-outline nav-login" style="color: white; border-color: white;" data-lang="nav_login">Login</a>
+            <a href="#" class="btn btn-amber">Sign Up</a>
+        </div>
+        
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Animated Clouds Background -->
+    <div class="clouds-bg"></div>
+
+    <!-- Main Content -->
+    <main class="weather-container">
+        
+        <!-- Location & Time Panel -->
+        <section class="location-time-panel">
+            <div class="location-info">
+                <h2><span id="loc-icon">ðŸ“</span> <span id="city-name">Detecting location...</span></h2>
+                <p id="state-name">Allow location access for local weather</p>
+            </div>
+            <div class="time-info">
+                <div class="date" id="current-date">Friday, 13 March 2026</div>
+                <h3 id="live-clock">00:00:00</h3>
+                <div class="search-bar" style="margin-top: 15px;">
+                    <input type="text" id="location-search" class="search-input" placeholder="Search city or districtâ€¦" data-lang="weather_search">
+                    <button class="btn btn-amber" id="search-btn" data-lang="weather_search_btn">ðŸ”</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Current Weather & Forecast Loader -->
+        <div id="weather-loader" style="text-align: center; font-size: 2rem; padding: 50px 0;">
+            â³ Fetching Live Weather Data...
+        </div>
+
+        <div id="weather-content" style="display: none;">
+            <!-- Current Weather Card -->
+            <section class="current-weather-card">
+                <div class="weather-main">
+                    <div class="weather-icon-large" id="current-icon">☁ï¸</div>
+                    <div class="weather-temp" id="current-temp">--Â°C</div>
+                    <div class="weather-condition" id="current-condition">--</div>
+                </div>
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <span class="detail-label" data-lang="weather_feels">Feels Like</span>
+                        <span class="detail-value" id="feels-like">--</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label" data-lang="weather_humidity">Humidity</span>
+                        <span class="detail-value" id="humidity">--</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label" data-lang="weather_wind">Wind Speed</span>
+                        <span class="detail-value" id="wind-speed">--</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label" data-lang="weather_uv">UV Index</span>
+                        <span class="detail-value" id="uv-index">--</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7-Day Forecast Strip -->
+            <h3 style="margin-bottom: 20px; font-family: var(--font-heading); font-size: 1.8rem;" data-lang="weather_7day">7-Day Forecast</h3>
+            <section class="forecast-strip" id="forecast-container">
+                <!-- Data populated by JS -->
+            </section>
+
+            <!-- Farming Weather Alerts -->
+            <section class="farming-alerts" id="alerts-container">
+                <!-- Alerts populated by JS -->
+            </section>
+
+            <!-- Agro-Weather Tips -->
+            <h3 style="margin-bottom: 20px; font-family: var(--font-heading); font-size: 1.8rem;" data-lang="agro_title">Agro-Weather Tips</h3>
+            <section class="agro-tips-grid" id="tips-container">
+                <!-- Tips populated by JS -->
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="position: relative; z-index: 10;">
+        <div class="footer-container">
+            <div class="footer-col" style="grid-column: span 2;">
+                <div class="footer-logo">🌱 FarmAdvisor</div>
+                <p class="footer-tagline">Real-time weather, market prices, and expert advice â€” all in one place for Indian farmers.</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" title="WhatsApp">📱</a>
+                    <a href="#" class="social-icon" title="YouTube">â–¶ï¸</a>
+                    <a href="#" class="social-icon" title="Twitter/X">ðŸ¦</a>
+                </div>
+            </div>
+            <!-- Standard Footer Links Omitted for Brevity but maintaining structure -->
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html" data-lang="nav_home">Home</a></li><li><a href="crop-advice.html" data-lang="nav_crop">Crop Advice</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> FarmAdvisor. Built for Indian Farmers.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="translations.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/weather.js"></script>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
+
+
+
+
+
